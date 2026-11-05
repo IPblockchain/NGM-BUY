@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGM · luxury dark purchase</title>
+    <!-- EmailJS (kept if you want to extend, but not used in core flow) -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("PakuuN4ADUDEqrzHl");
+        })();
+    </script>
+    <style>
+        /* ----- reset & dark luxury base ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0b0f;
+            background-image: radial-gradient(circle at 30% 10%, rgba(120, 80, 220, 0.08) 0%, transparent 50%),
+                              radial-gradient(circle at 90% 80%, rgba(0, 180, 255, 0.05) 0%, transparent 60%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            padding: 1.5rem;
+            margin: 0;
+            color: #eef2f6;
+        }
+
+        /* main glass card — deep black, transparent, blur */
+        .glass-panel {
+            background: rgba(8, 8, 12, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.95),
+                        0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+                        0 0 40px rgba(150, 100, 255, 0.08);
+            width: 100%;
+            max-width: 560px;
+            padding: 2.8rem 2.2rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        /* subtle shine line on top */
+        .glass-panel::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(180, 140, 255, 0.3), rgba(255, 255, 255, 0.5), rgba(180, 140, 255, 0.3), transparent);
+            border-radius: 100%;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            background: linear-gradient(130deg, #ffffff 0%, #c1b0e0 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .subhead {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #a8a0b8;
+            letter-spacing: 0.3px;
+            margin-bottom: 2.2rem;
+            border-left: 2px solid rgba(180, 140, 255, 0.5);
+            padding-left: 1rem;
+            line-height: 1.6;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        /* address block — wallet to copy */
+        .wallet-block {
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            padding: 1.2rem 1.2rem 1.2rem 1.6rem;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            transition: border 0.2s;
+        }
+
+        .wallet-block:hover {
+            border-color: rgba(160, 120, 255, 0.4);
+        }
+
+        .wallet-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+            flex: 1 1 240px;
+        }
+
+        .wallet-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8e86a0;
+            font-weight: 500;
+        }
+
+        .wallet-address {
+            font-family: 'SF Mono', 'Fira Code', 'Roboto Mono', monospace;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #ddd6f0;
+            word-break: break-all;
+            line-height: 1.5;
+            letter-spacing: 0.2px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 0.15rem 0;
+            border-radius: 6px;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 40px;
+            padding: 0.7rem 1.2rem;
+            color: #cdc2e6;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(4px);
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: rgba(140, 100, 255, 0.15);
+            border-color: rgba(160, 120, 255, 0.5);
+            color: #f0ebff;
+            transform: scale(1.02);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.98);
+        }
+
+        .copy-btn.copied {
+            border-color: #7faa6b;
+            background: rgba(80, 140, 80, 0.2);
+            color: #d4f0d4;
+        }
+
+        /* input area */
+        .input-group {
+            margin-top: 1.4rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .input-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #8e86a0;
+            margin-bottom: 0.6rem;
+            display: block;
+            font-weight: 500;
+        }
+
+        .address-input {
+            width: 100%;
+            background: rgba(10, 10, 14, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 1rem 1.4rem;
+            font-size: 0.95rem;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            color: #f0ecff;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+            letter-spacing: 0.2px;
+            backdrop-filter: blur(4px);
+        }
+
+        .address-input::placeholder {
+            color: #5a5468;
+            font-weight: 300;
+            letter-spacing: 0.4px;
+        }
+
+        .address-input:focus {
+            border-color: rgba(180, 130, 255, 0.7);
+            box-shadow: 0 0 0 3px rgba(140, 90, 255, 0.15);
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 1.1rem;
+            border-radius: 40px;
+            background: linear-gradient(135deg, #2a1f3a 0%, #0f0c16 100%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #f0eaff;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+        }
+
+        .confirm-btn:not(:disabled):hover {
+            background: linear-gradient(135deg, #392b52 0%, #171224 100%);
+            border-color: rgba(180, 140, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 18px 30px -12px rgba(100, 60, 200, 0.4);
+        }
+
+        .confirm-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(0.6);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        /* status / feedback */
+        .status-message {
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            min-height: 2.5rem;
+            color: #b0a7c0;
+            letter-spacing: 0.3px;
+            font-weight: 400;
+            transition: all 0.2s;
+            padding: 0.2rem;
+            border-radius: 100px;
+        }
+
+        .status-success {
+            color: #a0dfa0;
+            background: rgba(80, 140, 80, 0.1);
+            padding: 0.6rem;
+        }
+
+        .status-error {
+            color: #f0a0a0;
+            background: rgba(160, 60, 60, 0.1);
+            padding: 0.6rem;
+        }
+
+        .status-info {
+            color: #cdc2e6;
+        }
+
+        /* little fake luxury details */
+        .floating-note {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #4d485c;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 1.2rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .floating-note span {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* mobile */
+        @media (max-width: 480px) {
+            .glass-panel {
+                padding: 2rem 1.4rem;
+                border-radius: 32px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .wallet-block {
+                padding: 1rem;
+            }
+            .copy-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* subtle animated glow (optional) */
+        @keyframes softPulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        .glass-panel::after {
+            content: "";
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 70%;
+            height: 70%;
+            background: radial-gradient(circle, rgba(130, 90, 255, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: softPulse 6s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-panel">
+        <h1>NGM · EXCHANGE</h1>
+        <div class="subhead">
+            Private acquisition · G R A M  →  N G M
+        </div>
+
+        <!-- Payment address – copy zone -->
+        <div class="wallet-block">
+            <div class="wallet-info">
+                <div class="wallet-label">PAYMENT ADDRESS (GRAM)</div>
+                <div class="wallet-address" id="paymentAddress">
+                    UQCvbnPQ445IOtZrdSu4j2r6ugo_2dYb86ZQAkMJv2SCiOCk
+                </div>
+            </div>
+            <button class="copy-btn" id="copyBtn" type="button">
+                <span>⧉</span> COPY
+            </button>
+        </div>
+
+        <!-- Your wallet input -->
+        <div class="input-group">
+            <label class="input-label" for="userAddress">YOUR NGM RECEIVING ADDRESS</label>
+            <input type="text" id="userAddress" class="address-input" placeholder="UQ... or EQ... (TON address)" autocomplete="off" spellcheck="false">
+        </div>
+
+        <!-- Confirm button -->
+        <button class="confirm-btn" id="confirmBtn" type="button" disabled>
+            <span>✦</span> CONFIRM PURCHASE <span>✦</span>
+        </button>
+
+        <!-- status area -->
+        <div id="statusMessage" class="status-message"></div>
+
+        <!-- extra luxury nonsense text (as requested) -->
+        <div class="floating-note">
+            <span>◈ exclusive access</span>
+            <span>◈ dark pool</span>
+            <span>◈ private settlement</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // DOM elements
+            const paymentAddressEl = document.getElementById('paymentAddress');
+            const copyBtn = document.getElementById('copyBtn');
+            const userAddressInput = document.getElementById('userAddress');
+            const confirmBtn = document.getElementById('confirmBtn');
+            const statusMessage = document.getElementById('statusMessage');
+
+            // ----- copy payment address (with elegant feedback) -----
+            copyBtn.addEventListener('click', async () => {
+                const address = paymentAddressEl.innerText.trim();
+                try {
+                    await navigator.clipboard.writeText(address);
+                    // visual feedback
+                    copyBtn.innerHTML = '<span>✓</span> COPIED';
+                    copyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<span>⧉</span> COPY';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                } catch (err) {
+                    // fallback
+                    const textArea = document.createElement('textarea');
+                    textArea.value = address;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    copyBtn.innerHTML = '<span>✓</span> COPIED';
+                    copyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<span>⧉</span> COPY';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                }
+            });
+
+            // ----- enable/disable confirm button based on input (simple non-empty) -----
+            function validateAddress() {
+                const val = userAddressInput.value.trim();
+                // basic check: length > 10 (just to avoid empty)
+                // we are not strict — just require some reasonable length
+                if (val.length >= 20) {
+                    confirmBtn.disabled = false;
+                } else {
+                    confirmBtn.disabled = true;
+                }
+            }
+
+            userAddressInput.addEventListener('input', validateAddress);
+
+            // ----- confirm purchase action -----
+            confirmBtn.addEventListener('click', () => {
+                const userAddr = userAddressInput.value.trim();
+
+                // extra validation (still flexible)
+                if (!userAddr || userAddr.length < 20) {
+                    statusMessage.textContent = '⛔ Please enter a valid NGM receiving address.';
+                    statusMessage.className = 'status-message status-error';
+                    return;
+                }
+
+                // Show "processing" state
+                statusMessage.textContent = '⏳ Verifying transaction... please wait.';
+                statusMessage.className = 'status-message status-info';
+                confirmBtn.disabled = true;  // disable during fake processing
+
+                // simulate async operation (luxury feel)
+                setTimeout(() => {
+                    // success message (no real backend, just UI)
+                    statusMessage.textContent = '✓ Address registered. NGM will be sent after confirmation.';
+                    statusMessage.className = 'status-message status-success';
+
+                    // Re-enable confirm button if needed? Or leave disabled?
+                    // Better UX: re-enable after short delay to allow another attempt if needed.
+                    setTimeout(() => {
+                        confirmBtn.disabled = false;
+                        // but we also want to reflect current input validity
+                        validateAddress();
+                    }, 1500);
+
+                    // optional: clear status after 8 sec
+                    setTimeout(() => {
+                        if (statusMessage.classList.contains('status-success')) {
+                            statusMessage.textContent = '';
+                            statusMessage.className = 'status-message';
+                        }
+                    }, 8000);
+
+                }, 1800); // 1.8s simulation
+            });
+
+            // initial validation (in case autofill)
+            validateAddress();
+
+            // small extra: on page load, show a neutral hint? optional
+            // no pre-filled status.
+
+            // Ensure copy fallback works on older browsers, and also address is static text
+            // Additional luxury: disable confirm if input empty (already done)
+
+            // Also: if user enters something then deletes, disable button
+            // already handled by validateAddress
+
+            // We also want to show subtle effect if address too short
+            // no error message until they click, but button stays disabled.
+
+            // Add a touch: pressing Enter in input triggers confirm if enabled?
+            userAddressInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (!confirmBtn.disabled) {
+                        confirmBtn.click();
+                    }
+                }
+            });
+
+            // Reset status if user changes input after success/error?
+            userAddressInput.addEventListener('input', () => {
+                // if there's a leftover success/error, clear it to be clean
+                if (statusMessage.textContent.includes('✓') || statusMessage.textContent.includes('⛔')) {
+                    statusMessage.textContent = '';
+                    statusMessage.className = 'status-message';
+                }
+            });
+
+        })();
+    </script>
+</body>
+</html>
